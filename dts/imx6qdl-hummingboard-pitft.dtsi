@@ -1,0 +1,99 @@
+&iomuxc {
+	ecspi2 {
+		pinctrl_ecspi2_cs_1: ecspi2_cs_grp-1 {
+			fsl,pins = <
+				MX6QDL_PAD_EIM_RW__GPIO2_IO26  0x100b1
+				MX6QDL_PAD_EIM_LBA__GPIO2_IO27 0x100b1
+			>;
+		};
+
+		pinctrl_ecspi2_1: ecspi2grp-1 {
+			fsl,pins = <
+				MX6QDL_PAD_EIM_OE__ECSPI2_MISO  0x100b1
+				MX6QDL_PAD_EIM_CS1__ECSPI2_MOSI 0x100b1
+				MX6QDL_PAD_EIM_CS0__ECSPI2_SCLK 0x100b1
+				MX6QDL_PAD_EIM_DA3__GPIO3_IO03  0x100b1
+				MX6QDL_PAD_SD3_CLK__GPIO7_IO03  0x80000000
+			>;
+		};
+	};
+};
+
+&ecspi2 {
+	fsl,spi-num-chipselects = <2>;
+	cs-gpios = <&gpio2 27 0>, <&gpio2 26 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi2_1 &pinctrl_ecspi2_cs_1>;
+	status = "okay";
+
+	stmpe610@0 {
+		compatible = "st,stmpe610";
+		reg = <0>;
+		status = "okay";
+
+		spi-max-frequency = <500000>;
+		interrupts = <1>;
+		irq_over_gpio = <1>;
+		irq_gpio = <195>;
+		irq_trigger = <2>;
+
+		stmpe_touchscreen {
+			compatible = "st,stmpe-ts";
+			ts,sample-time = <4>;
+			ts,mod-12b = <1>;
+			ts,ref-sel = <0>;
+			ts,adc-freq = <2>;
+			ts,ave-ctrl = <3>;
+			ts,touch-det-delay = <4>;
+			ts,settling = <2>;
+			ts,fraction-z = <7>;
+			ts,i-drive = <0>;
+		};
+	};
+
+	pitft@1{
+		/* rev.A */
+		/* compatible = "ilitek,ili9340"; */
+		/* rev.B */
+		compatible = "ilitek,ili9341";
+		reg = <1>;
+		status = "okay";
+
+		spi-max-frequency = <32000000>;
+		rotate = <90>;
+		bgr;
+		buswidth = <8>;
+		dc-gpios = <&gpio3 3 0>;
+
+		init = <0x1000001
+			0x2000005
+			0x1000028
+			0x10000EF 0x03 0x80 0x02
+			0x10000CF 0x00 0xC1 0x30
+			0x10000ED 0x64 0x03 0x12 0x81
+			0x10000E8 0x85 0x00 0x78
+			0x10000CB 0x39 0x2C 0x00 0x34 0x02
+			0x10000F7 0x20
+			0x10000EA 0x00 0x00
+			0x10000C0 0x23
+			0x10000C1 0x10
+			0x10000C5 0x3e 0x28
+			0x10000C7 0x86
+			0x100003A 0x55
+			0x10000B1 0x00 0x18
+			0x10000B6 0x08 0x82 0x27
+			0x10000F2 0x00
+			0x1000026 0x01
+			0x10000E0 0x0F 0x31 0x2B 0x0C 0x0E 0x08 0x4E 0xF1 0x37 0x07 0x10 0x03 0x0E 0x09 0x00
+			0x10000E1 0x00 0x0E 0x14 0x03 0x11 0x07 0x31 0xC1 0x48 0x08 0x0F 0x0C 0x31 0x36 0x0F
+			0x1000011
+			0x2000064
+			0x1000029
+			0x2000014>;
+		debug = <0>;
+	};
+};
+
+&flexcan1 {
+	status = "disabled";
+};

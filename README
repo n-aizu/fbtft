@@ -4,21 +4,27 @@
 Linux Framebuffer drivers for small TFT LCD display modules.
 The module 'fbtft' makes writing drivers for some of these displays very easy.
 
-Development is done on a Raspberry Pi running the Raspbian "wheezy" distribution.
+This branch is forked from https://github.com/notro/fbtft/
+And add support for HummingBoard to use Adafruit PiTFT.
 
 INSTALLATION
+(to use PiTFT on HummingBoard)
+
   Download kernel sources
-  
+   tree   : https://github.com/n-aizu/linux-imx6.git
+   branch : boundary-wand-imx_3.10.17_1.0.1_ga-rt
+
   cd drivers/video
-  git clone https://github.com/notro/fbtft.git
-  
+  git clone https://github.com/n-aizu/fbtft.git
+  cd fbtft
+  git checkout imx6-hummingboard
+
   Add to drivers/video/Kconfig:   source "drivers/video/fbtft/Kconfig"
   Add to drivers/video/Makefile:  obj-y += fbtft/
-  
-  Enable driver(s) in menuconfig and build the kernel
 
+  Copy fbtft/dts/imx6qdl-hummingboard-pitft.dtsi to arch/arm/boot/dts/
+  Add to arch/arm/boot/dts/imx6[dl|q]-hummingboard.dts: #include "imx6qdl-hummingboard-pitft.dtsi"
+  (If your PiTFT is rev.A, enable ili9340 and disable ili9341 in imx6qdl-hummingboard-pitft.dtsi)
 
-See wiki for more information: https://github.com/notro/fbtft/wiki
-
-
-Source: https://github.com/notro/fbtft/
+  Enable drivers in menuconfig and build the kernel
+  (fbtft, stmpe and stmpe-ts)
