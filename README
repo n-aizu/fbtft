@@ -12,7 +12,7 @@ INSTALLATION
 
   Download kernel sources
    tree   : https://github.com/n-aizu/linux-imx6.git
-   branch : boundary-wand-imx_3.10.17_1.0.1_ga-rt
+   branch : boundary-wand-imx_3.10.17_1.0.2_ga-rt
 
   cd drivers/video
   git clone https://github.com/n-aizu/fbtft.git
@@ -22,8 +22,8 @@ INSTALLATION
   Add to drivers/video/Kconfig:   source "drivers/video/fbtft/Kconfig"
   Add to drivers/video/Makefile:  obj-y += fbtft/
 
-  Copy fbtft/dts/imx6qdl-hummingboard-pitft.dtsi to arch/arm/boot/dts/
-  Add to arch/arm/boot/dts/imx6[dl|q]-hummingboard.dts: #include "imx6qdl-hummingboard-pitft.dtsi"
+  Copy fbtft/dts/imx6qdl-hummingboard-pitft[35].dtsi to arch/arm/boot/dts/
+  Add to arch/arm/boot/dts/imx6[dl|q]-hummingboard.dts: #include "imx6qdl-hummingboard-pitft.dtsi" or #include "imx6qdl-hummingboard-pitft35.dtsi"
   (If your PiTFT is rev.A, enable ili9340 and disable ili9341 in imx6qdl-hummingboard-pitft.dtsi)
 
   Enable drivers in menuconfig and build the kernel

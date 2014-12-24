@@ -1,0 +1,70 @@
+&iomuxc {
+	ecspi2 {
+		pinctrl_ecspi2_cs_1: ecspi2_cs_grp-1 {
+			fsl,pins = <
+				MX6QDL_PAD_EIM_RW__GPIO2_IO26  0x100b1
+				MX6QDL_PAD_EIM_LBA__GPIO2_IO27 0x100b1
+			>;
+		};
+
+		pinctrl_ecspi2_1: ecspi2grp-1 {
+			fsl,pins = <
+				MX6QDL_PAD_EIM_OE__ECSPI2_MISO  0x100b1
+				MX6QDL_PAD_EIM_CS1__ECSPI2_MOSI 0x100b1
+				MX6QDL_PAD_EIM_CS0__ECSPI2_SCLK 0x100b1
+				MX6QDL_PAD_EIM_DA3__GPIO3_IO03  0x100b1
+				MX6QDL_PAD_SD3_CLK__GPIO7_IO03  0x80000000
+			>;
+		};
+	};
+};
+
+&ecspi2 {
+	fsl,spi-num-chipselects = <2>;
+	cs-gpios = <&gpio2 27 0>, <&gpio2 26 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi2_1 &pinctrl_ecspi2_cs_1>;
+	status = "okay";
+
+	stmpe610@0 {
+		compatible = "st,stmpe610";
+		reg = <0>;
+		status = "okay";
+
+		spi-max-frequency = <500000>;
+		interrupts = <1>;
+		irq_over_gpio = <1>;
+		irq_gpio = <&gpio7 3 1>;
+		irq_trigger = <2>;
+
+		stmpe_touchscreen {
+			compatible = "st,stmpe-ts";
+			ts,sample-time = <4>;
+			ts,mod-12b = <1>;
+			ts,ref-sel = <0>;
+			ts,adc-freq = <2>;
+			ts,ave-ctrl = <3>;
+			ts,touch-det-delay = <4>;
+			ts,settling = <2>;
+			ts,fraction-z = <7>;
+			ts,i-drive = <0>;
+		};
+	};
+
+	pitft35@1{
+		compatible = "himax,hx8357d";
+		reg = <1>;
+		status = "okay";
+
+		spi-max-frequency = <56000000>;
+		rotate = <270>;
+		bgr;
+		buswidth = <8>;
+		dc-gpios = <&gpio3 3 0>;
+		debug = <0>;
+	};
+};
+
+&flexcan1 {
+	status = "disabled";
+};
