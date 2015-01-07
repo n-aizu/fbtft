@@ -39,15 +39,15 @@
 
 		stmpe_touchscreen {
 			compatible = "st,stmpe-ts";
-			ts,sample-time = <4>;
-			ts,mod-12b = <1>;
-			ts,ref-sel = <0>;
-			ts,adc-freq = <2>;
-			ts,ave-ctrl = <3>;
-			ts,touch-det-delay = <4>;
-			ts,settling = <2>;
-			ts,fraction-z = <7>;
-			ts,i-drive = <0>;
+			st,sample-time = <4>;
+			st,mod-12b = <1>;
+			st,ref-sel = <0>;
+			st,adc-freq = <2>;
+			st,ave-ctrl = <3>;
+			st,touch-det-delay = <4>;
+			st,settling = <2>;
+			st,fraction-z = <7>;
+			st,i-drive = <0>;
 		};
 	};
 
