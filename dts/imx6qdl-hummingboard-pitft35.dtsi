@@ -48,6 +48,7 @@
 			st,settling = <2>;
 			st,fraction-z = <7>;
 			st,i-drive = <0>;
+			st,rotate = <270>;
 		};
 	};
 
